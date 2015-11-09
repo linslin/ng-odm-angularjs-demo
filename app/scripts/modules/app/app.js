@@ -22,7 +22,8 @@ angular
         'ngLodash',
         'ODMConfiguration',
         'ngOdm',
-        'model.user'
+        'model.user',
+        'app.startupRoutine'
     ])
     .config(function ($routeProvider) {
         $routeProvider
@@ -39,4 +40,21 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    });
+    })
+    .run(['startupRoutine', run]);
+
+
+    // ################################################## angularJS Methods  // ########################################
+
+
+    /**
+     * Application start run routine
+     *
+     * @param $ionicPlatform
+     * @param startupRoutine
+     */
+    function run(startupRoutine) {
+
+        //run startup routine on any direct reload
+        startupRoutine.run();
+    }

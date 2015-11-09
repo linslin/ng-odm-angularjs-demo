@@ -14,8 +14,6 @@
 angular.module('angularDemoApp')
     .controller('MainCtrl', ['$odm', 'userModel', function ($odm, userModel) {
 
-        //Init db on startup
-        $odm.db().init();
 
         userModel.ID = null;
         userModel.namespace = 'test';
