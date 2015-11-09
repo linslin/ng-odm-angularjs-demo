@@ -91,7 +91,7 @@ angular.module('angularDemoApp')
 
                     //reset form
                     $scope.addUserGroupForm.$setPristine();
-                    $scope.userGroup = angular.copy(defaultFormData);
+                    $scope.userGroups = angular.copy(defaultFormData);
                 });
             } else {
                 //set alert
@@ -107,7 +107,7 @@ angular.module('angularDemoApp')
          * @returns {*}
          */
         $scope.getUserGroupCount = function (userGroupId) {
-            userGroupHasUserModel.findByAttributes({userID: userGroupId}).then(function(){
+            userGroupHasUserModel.findAllByAttributes({userID: userGroupId}).then(function(){
                 //search for your to delete from scope
                 var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
                     return chr.ID == userGroupId;
@@ -126,17 +126,22 @@ angular.module('angularDemoApp')
          * @param userGroupId
          */
         $scope.deleteUserGroup = function (userGroupId) {
-            if (userGroupModel.deleteByPk(userGroupId)) {
 
-                //search for your to delete from scope
-                var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
-                    return chr.ID == userGroupId;
-                });
+            //delete all users in group
+            userGroupHasUserModel.deleteByAttributes({ "groupId": userGroupId}).then(function () {
+                //delete group
+                if (userGroupModel.deleteByPk(userGroupId)) {
 
-                //validate search result
-                if (indexToDelete !== -1) {
-                    $scope.userGroups.splice(indexToDelete, 1);
+                    //search for your to delete from scope
+                    var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
+                        return chr.ID == userGroupId;
+                    });
+
+                    //validate search result
+                    if (indexToDelete !== -1) {
+                        $scope.userGroups.splice(indexToDelete, 1);
+                    }
                 }
-            }
+            });
         };
     }]);

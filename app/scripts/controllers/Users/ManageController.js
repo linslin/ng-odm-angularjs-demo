@@ -13,15 +13,58 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserManageCtrl', [ '$scope', 'userModel', 'lodash' ,function ($scope, userModel, lodash) {
+    .controller('UserManageCtrl', [ '$scope', 'userModel', 'userGroupModel', 'userGroupHasUserModel', 'lodash' ,
+        function ($scope, userModel, userGroupModel, userGroupHasUserModel, lodash) {
 
         // ################################ controller objects default states // #######################################
 
         /**
-         * Init users
+         * Init users nested with groups
          */
         userModel.findAll().then(function(){
-            $scope.users = userModel.data;
+
+            //Init
+            $scope.users = [];
+            var userGroupHasUserModelClones = [];
+            var userGroupModelClones = [];
+
+
+            angular.forEach(userModel.data, function (user, key){
+
+                //Init
+                userGroupHasUserModel.ID = null;
+                userGroupHasUserModel.userId = null;
+                var groupData = {
+                    ID: null,
+                    title: 'None'
+                };
+
+                // clone object to make async handling work here
+                userGroupHasUserModelClones[key] = lodash.clone(userGroupHasUserModel);
+                userGroupHasUserModelClones[key].findByAttributes({userId: user.ID}).then(function(){
+
+                    if (userGroupHasUserModelClones[key].groupId !== 0 ) {
+                        userGroupModelClones[key] = lodash.clone(userGroupModel);
+                        var userGroupData = userGroupModelClones[key].findByPk(userGroupHasUserModelClones[key].groupId);
+
+                        groupData = {
+                            ID: userGroupHasUserModelClones[key].ID,
+                            title: userGroupData.title
+                        };
+                    }
+
+                    // set group data & and user data
+                    user.group = groupData;
+                    $scope.users.push(user);
+                });
+            });
+        });
+
+        /**
+         * Init users groups
+         */
+        userGroupModel.findAll().then(function(){
+            $scope.userGroups = userGroupModel.data;
         });
 
         /**
@@ -117,6 +160,38 @@ angular.module('angularDemoApp')
                 //set alert
                 $scope.showAlert = false;
             }
+        };
+
+        /**
+         *
+         * @param userId
+         * @param userGroupId
+         */
+        $scope.setUserToGroup = function (userId, userGroupId, userGroupTitle) {
+
+            //delete current group relations
+            userGroupHasUserModel.deleteByAttributes({ "userId": userId}).then(function () {
+
+                //setup user group has user model data
+                userGroupHasUserModel.ID = null;
+                userGroupHasUserModel.userId = userId;
+                userGroupHasUserModel.groupId = userGroupId;
+
+                //try save
+                userGroupHasUserModel.save().then(function() {
+
+                    //search for your to delete from scope
+                    var indexToDelete = lodash.findIndex($scope.users, function (chr) {
+                        return chr.ID == userId;
+                    });
+
+                    //validate search result
+                    if (indexToDelete !== -1) {
+                        $scope.users[indexToDelete].group.ID = userGroupId;
+                        $scope.users[indexToDelete].group.title = userGroupTitle;
+                    }
+                });
+            });
         };
 
         /**

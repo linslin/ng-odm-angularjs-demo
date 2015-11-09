@@ -37,6 +37,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Usergroup</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -45,6 +47,20 @@
                 <td ng-bind="user.firstname"></td>
                 <td ng-bind="user.sirname"></td>
                 <td ng-bind="user.email"></td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span ng-bind="user.group.title"></span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0);">None</a></li>
+                            <li ng-repeat="(index, userGroup) in userGroups">
+                                <a href="javascript:void(0);" ng-click="setUserToGroup(user.ID, userGroup.ID, userGroup.title);" ng-bind="userGroup.title"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
                 <td><button type="button" ng-click="deleteUser(user.ID);" class="btn pull-right btn-danger">X</button></td>
             </tr>
             </tbody>
