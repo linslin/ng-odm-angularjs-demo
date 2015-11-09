@@ -23,6 +23,7 @@ angular
         'ODMConfiguration',
         'ngOdm',
         'model.user',
+        'model.userGroup',
         'app.startupRoutine',
         'app.route'
     ])
