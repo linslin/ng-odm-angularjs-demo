@@ -24,6 +24,7 @@ angular
         'ngOdm',
         'model.user',
         'model.userGroup',
+        'model.userGroupHasUser',
         'app.startupRoutine',
         'app.route'
     ])
