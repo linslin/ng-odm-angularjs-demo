@@ -1,7 +1,7 @@
 /**
- * List controller
+ * User manage controller
  *
- * @name        ListCtrl
+ * @name        UserManageCtrl
  * @author      Nils Gajsek <info@linslin.org>
  * @copyright   Nils Gajsek http://www.linslin.org
  * @package     ng-odm-angular.js-demo
@@ -13,7 +13,7 @@
 
 
 angular.module('angularDemoApp')
-    .controller('ListCtrl', function () {
+    .controller('UserManageCtrl', function () {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',

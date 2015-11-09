@@ -46,9 +46,14 @@
                     controller: 'MainCtrl',
                     controllerAs: 'main'
                 })
-                .when('/list', {
-                    templateUrl: 'views/list.html',
-                    controller: 'ListCtrl',
+                .when('/listUsers', {
+                    templateUrl: 'views/users/list.html',
+                    controller: 'UserListCtrl',
+                    controllerAs: 'list'
+                })
+                .when('/manageUsers', {
+                    templateUrl: 'views/users/manage.html',
+                    controller: 'UserManageCtrl',
                     controllerAs: 'list'
                 })
                 .otherwise({
