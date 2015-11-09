@@ -39,10 +39,10 @@
 
                 <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#/">Home</a></li>
-                        <li><a ng-href="#/listUsers">List Users</a></li>
-                        <li><a ng-href="#/manageUsers">Manage Users</a></li>
+                    <ul class="nav navbar-nav" ng-controller="routeServiceCtrl">
+                        <li ng-class="{active : isPage('/')}"><a href="#/">Home</a></li>
+                        <li ng-class="{active : isPage('/listUsers')}"><a ng-href="#/listUsers">List Users</a></li>
+                        <li ng-class="{active : isPage('/manageUsers')}"><a ng-href="#/manageUsers">Manage Users</a></li>
                     </ul>
                 </div>
             </div>

@@ -13,10 +13,15 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserListCtrl', function () {
-        this.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-    });
+    .controller('UserListCtrl', [ 'userModel', 'userGroupModel', '$scope'
+        ,function (userModel, userGroupModel, $scope) {
+
+         // ################################ controller objects default states // ######################################
+
+        /**
+         * Init users
+         */
+        userModel.findAll().then(function(){
+            $scope.users = userModel.data;
+        });
+    }]);
