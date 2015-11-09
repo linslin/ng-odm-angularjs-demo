@@ -1,7 +1,7 @@
 /**
  * angular-odm default configuration
  *
- * @name        config
+ * @name        ODMConfiguration
  * @author      Nils Gajsek <nils.gajsek@linslin.org>
  * @copyright   2015 linslin.org
  * @package     ng-odm-angularjs-demo

@@ -9,7 +9,7 @@
     demo runs without a API an background. Any data is stored on client side in local storage.
   </p>
 </div>
-<div class="bs-example" data-example-id="thumbnails-with-custom-content">
+<div class="bs-example" data-example-id="thumbnails-with-custom-content" ng-controller="ContentGeneratorCtrl">
   <div class="row">
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
@@ -18,7 +18,7 @@
           <h3>Add dummy content</h3>
           <p>Will create a small stack of dummy data user and user groups.</p>
           <p>
-            <a href="#" class="btn btn-block btn-primary" role="button">Add dummy data</a>
+            <a href="javascript:void(0);" class="btn btn-block btn-primary" ng-click="generateSmallStack();" role="button">Add dummy data</a>
           </p>
         </div>
       </div>
