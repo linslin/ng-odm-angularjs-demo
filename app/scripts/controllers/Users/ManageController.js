@@ -16,131 +16,148 @@ angular.module('angularDemoApp')
     .controller('UserManageCtrl', [ '$scope', 'userModel', 'userGroupModel', 'userGroupHasUserModel', 'lodash' ,
         function ($scope, userModel, userGroupModel, userGroupHasUserModel, lodash) {
 
-        // ################################ controller objects default states // #######################################
+            // ################################ controller objects default states // #######################################
 
-        /**
-         * Init users nested with groups
-         */
-        var userData = userModel.findAll();
+            /**
+             * Init users groups
+             */
+            $scope.userGroups = userGroupModel.findAll();
 
-        //Init
-        $scope.users = [];
-        var userGroupHasUserModelClones = [];
-        var userGroupModelClones = [];
+            /**
+             * User Add error scope
+             * @param user
+             */
+            $scope.error = {
+                sirname: false,
+                firstname: false,
+                email: false
+            };
 
+            /**
+             * Hold default form data
+             *
+             * @name  defaultFormData
+             * @type {{sirname: string, firstname: string, email: string}}
+             */
+            var defaultFormData = {
+                sirname: '',
+                firstname: '',
+                email: ''
+            };
 
-        angular.forEach(userData, function (user, key){
-
-            //Init
-            var groupData = {
+            /**
+             * Default group data object
+             *
+             * @type {{ID: null, title: string}}
+             */
+            var defaultGroupData = {
                 ID: null,
                 title: 'None'
             };
 
-            // clone object to make async handling work here
-            var userGroupHasUserData = userGroupHasUserModel.findByAttributes({userId: user.ID});
+            /**
+             * Default alert box state
+             * @type {boolean}
+             */
+            $scope.showAlert = false;
 
-            if (userGroupHasUserData !== undefined && userGroupHasUserData.groupId !== 0 ) {
+            /**
+             * Default alert box state
+             * @type {boolean}
+             */
 
-                //find user group data by PK
-                var userGroupData = userGroupModel.findByPk(userGroupHasUserData.groupId);
-
-                groupData = {
-                    ID: userGroupData.ID,
-                    title: userGroupData.title
-                };
-            }
-
-            // set group data & and user data
-            user.group = groupData;
-            $scope.users.push(user);
-        });
-
-        /**
-         * Init users groups
-         */
-        $scope.userGroups = userGroupModel.findAll();
-
-        /**
-         * User Add error scope
-         * @param user
-         */
-        $scope.error = {
-            sirname: false,
-            firstname: false,
-            email: false
-        };
-
-        /**
-         * Hold default form data
-         *
-         * @name  defaultFormData
-         * @type {{sirname: string, firstname: string, email: string}}
-         */
-        var defaultFormData = {
-            sirname: '',
-            firstname: '',
-            email: ''
-        };
-
-        /**
-         * Default alert box state
-         * @type {boolean}
-         */
-        $scope.showAlert = false;
+            /**
+             * Default alert box state
+             * @type {Array}
+             */
+            $scope.users = [];
 
 
-        // ###################################### scope control functions // ###########################################
+            // ###################################### scope control functions // ###########################################
 
-        /**
-         * Add user
-         *
-         * @param {object} user
-         */
-        $scope.addUser = function (user) {
+            /**
+             * Init users nested with groups
+             */
+            function init () {
 
-            //Init valid state
-            var valid = true;
+                //Get all users
+                var userData = userModel.findAll();
 
-            //validate input
-            if (user === undefined || user.firstname === undefined || String(user.firstname).length === 0) {
-                valid = false;
-                $scope.error.firstname = true;
-            } else {
-                $scope.error.firstname = false;
-            }
+                angular.forEach(userData, function (user, key){
 
-            if (user === undefined || user.sirname === undefined || String(user.sirname).length === 0) {
-                valid = false;
-                $scope.error.sirname = true;
-            } else {
-                $scope.error.sirname = false;
-            }
+                    // clone object to make async handling work here
+                    var userGroupHasUserData = userGroupHasUserModel.findByAttributes({userId: user.ID});
 
-            if (user === undefined || user.email === undefined || String(user.email).length === 0) {
-                valid = false;
-                $scope.error.email = true;
-            } else {
-                $scope.error.email = false;
+                    if (userGroupHasUserData !== undefined && userGroupHasUserData.groupId !== 0 ) {
+
+                        //find user group data by PK
+                        var userGroupData = userGroupModel.findByPk(userGroupHasUserData.groupId);
+
+                        user.group = {
+                            ID: userGroupData.ID,
+                            title: userGroupData.title
+                        };
+                    } else {
+                        user.group =  angular.copy(defaultGroupData);
+                    }
+
+                    // set group data & and user data
+                    $scope.users.push(user);
+                });
             }
 
 
-            //save if valid
-            if (valid) {
+            /**
+             * Add user
+             *
+             * @param {object} user
+             */
+            $scope.addUser = function (user) {
 
-                //Setup user model
-                userModel.ID = null;
-                userModel.firstname = user.firstname;
-                userModel.sirname = user.sirname;
-                userModel.email = user.email;
+                //Init valid state
+                var valid = true;
 
-                //Save to local storage db
-                userModel.save().then(function(){
+                //validate input
+                if (user === undefined || user.firstname === undefined || String(user.firstname).length === 0) {
+                    valid = false;
+                    $scope.error.firstname = true;
+                } else {
+                    $scope.error.firstname = false;
+                }
+
+                if (user === undefined || user.sirname === undefined || String(user.sirname).length === 0) {
+                    valid = false;
+                    $scope.error.sirname = true;
+                } else {
+                    $scope.error.sirname = false;
+                }
+
+                if (user === undefined || user.email === undefined || String(user.email).length === 0) {
+                    valid = false;
+                    $scope.error.email = true;
+                } else {
+                    $scope.error.email = false;
+                }
+
+
+                //save if valid
+                if (valid) {
+
+                    //Setup user model
+                    userModel.ID = null;
+                    userModel.firstname = user.firstname;
+                    userModel.sirname = user.sirname;
+                    userModel.email = user.email;
+
+                    //Save to local storage db
+                    userModel.save();
+
                     $scope.users.push({
                         ID: userModel.ID,
                         firstname: userModel.firstname,
                         sirname: userModel.sirname,
-                        email: userModel.email
+                        email: userModel.email,
+                        group: defaultGroupData
                     });
 
                     //set alert
@@ -149,61 +166,68 @@ angular.module('angularDemoApp')
                     //reset form
                     $scope.addUserForm.$setPristine();
                     $scope.user = angular.copy(defaultFormData);
-                });
-            } else {
-                //set alert
-                $scope.showAlert = false;
-            }
-        };
+                } else {
+                    //set alert
+                    $scope.showAlert = false;
+                }
+            };
 
-        /**
-         *
-         * @param userId
-         * @param userGroupId
-         */
-        $scope.setUserToGroup = function (userId, userGroupId, userGroupTitle) {
+            /**
+             *
+             * @param userId
+             * @param userGroupId
+             */
+            $scope.setUserToGroup = function (userId, userGroupId, userGroupTitle) {
 
-            //delete current group relations
-            userGroupHasUserModel.deleteByAttributes({ "userId": userId});
+                //delete current group relations
+                userGroupHasUserModel.deleteByAttributes({ "userId": userId});
 
-            //setup user group has user model data
-            userGroupHasUserModel.ID = null;
-            userGroupHasUserModel.userId = userId;
-            userGroupHasUserModel.groupId = userGroupId;
+                //setup user group has user model data
+                userGroupHasUserModel.ID = null;
+                userGroupHasUserModel.userId = userId;
+                userGroupHasUserModel.groupId = userGroupId;
 
-            //try save
-            userGroupHasUserModel.save();
-
-            //search for your to delete from scope
-            var indexToDelete = lodash.findIndex($scope.users, function (chr) {
-                return chr.ID == userId;
-            });
-
-            //validate search result
-            if (indexToDelete !== -1) {
-                $scope.users[indexToDelete].group.ID = userGroupId;
-                $scope.users[indexToDelete].group.title = userGroupTitle;
-            }
-
-        };
-
-        /**
-         * Delete user action
-         *
-         * @param userId
-         */
-        $scope.deleteUser = function (userId) {
-            if (userModel.deleteByPk(userId)) {
+                //try save
+                userGroupHasUserModel.save();
+                console.log(userId);
 
                 //search for your to delete from scope
-                var indexToDelete = lodash.findIndex($scope.users, function (chr) {
+                var indexToModify = lodash.findIndex($scope.users, function (chr) {
                     return chr.ID == userId;
                 });
 
+
                 //validate search result
-                if (indexToDelete !== -1) {
-                    $scope.users.splice(indexToDelete, 1);
+                if (indexToModify !== -1) {
+                    $scope.users[indexToModify].group.ID = userGroupId;
+                    console.log($scope.users[indexToModify]);
+                    $scope.users[indexToModify].group.title = userGroupTitle;
                 }
-            }
-        };
-    }]);
+
+
+            };
+
+            /**
+             * Delete user action
+             *
+             * @param userId
+             */
+            $scope.deleteUser = function (userId) {
+                if (userModel.deleteByPk(userId)) {
+
+                    //search for your to delete from scope
+                    var indexToDelete = lodash.findIndex($scope.users, function (chr) {
+                        return chr.ID == userId;
+                    });
+
+                    //validate search result
+                    if (indexToDelete !== -1) {
+                        $scope.users.splice(indexToDelete, 1);
+                    }
+                }
+            };
+
+
+            //call init on button after load
+            init();
+        }]);
