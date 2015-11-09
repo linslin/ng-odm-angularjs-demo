@@ -35,9 +35,6 @@
         //Init object
         var self = this;
 
-        console.log($odm);
-
-
         //define model object table
         self._table = 'user';
 

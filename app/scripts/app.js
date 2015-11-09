@@ -1,13 +1,16 @@
+/**
+ * angularDemoApp
+ *
+ * @name        angularDemoApp
+ * @author      Nils Gajsek <info@linslin.org>
+ * @copyright   Nils Gajsek http://www.linslin.org
+ * @package     ng-odm-angular.js-demo
+ * @version     1.0
+ */
+
+//ECMA6 Strict
 'use strict';
 
-/**
- * @ngdoc overview
- * @name angularDemoApp
- * @description
- * # angularDemoApp
- *
- * Main module of the application.
- */
 angular
     .module('angularDemoApp', [
         'ngAnimate',
@@ -28,10 +31,10 @@ angular
                 controller: 'MainCtrl',
                 controllerAs: 'main'
             })
-            .when('/about', {
-                templateUrl: 'views/about.html',
-                controller: 'AboutCtrl',
-                controllerAs: 'about'
+            .when('/list', {
+                templateUrl: 'views/list.html',
+                controller: 'ListCtrl',
+                controllerAs: 'list'
             })
             .otherwise({
                 redirectTo: '/'
