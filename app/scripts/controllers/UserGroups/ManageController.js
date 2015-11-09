@@ -35,7 +35,7 @@ angular.module('angularDemoApp')
          * Hold default form data
          *
          * @name  defaultFormData
-         * @type {{sirname: string, firstname: string, email: string}}
+         * @type {{surname: string, firstname: string, email: string}}
          */
         var defaultFormData = {
             title: ''

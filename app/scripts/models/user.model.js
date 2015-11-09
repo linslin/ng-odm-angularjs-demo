@@ -43,7 +43,7 @@
         // HINT: "modelclass.ID" is automatically added by localStorageDB
         self._attributes = [
             {name: 'firstname', type: 'text'},
-            {name: 'sirname', type: 'text'},
+            {name: 'surname', type: 'text'},
             {name: 'email', type: 'text'},
             {name: 'web', type: 'text'}
         ];

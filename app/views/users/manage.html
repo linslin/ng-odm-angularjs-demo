@@ -11,10 +11,10 @@
                 <input type="text" class="form-control" id="firstname" name="firstname" ng-model="user.firstname" placeholder="Firstname" />
             </div>
         </div>
-        <div class="form-group" ng-class="{'has-error': error.sirname}">
-            <label for="sirname" class="control-label col-xs-2">Sirname</label>
+        <div class="form-group" ng-class="{'has-error': error.surname}">
+            <label for="surname" class="control-label col-xs-2">Lastname</label>
             <div class="col-xs-10">
-                <input type="text" class="form-control" id="sirname" ng-model="user.sirname" placeholder="Sirname">
+                <input type="text" class="form-control" id="surname" ng-model="user.surname" placeholder="Lastname">
             </div>
         </div>
         <div class="form-group" ng-class="{'has-error': error.email}">
@@ -34,8 +34,8 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Email</th>
                 <th>Usergroup</th>
                 <th></th>
@@ -45,7 +45,7 @@
             <tr ng-repeat="(key, user) in users | orderBy: '-ID'"  class="repeat-item">
                 <th scope="row" ng-bind="user.ID"></th>
                 <td ng-bind="user.firstname"></td>
-                <td ng-bind="user.sirname"></td>
+                <td ng-bind="user.surname"></td>
                 <td ng-bind="user.email"></td>
                 <td>
                     <div class="btn-group">

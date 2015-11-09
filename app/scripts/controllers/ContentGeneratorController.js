@@ -13,4 +13,41 @@
 
 angular.module('angularDemoApp')
     .controller('ContentGeneratorCtrl', ['$odm', 'userModel',
-        function () {}]);
+        function ($odm, userModel) {
+
+
+
+            // ################################ controller objects default states // ######################################
+
+            /**
+             * Init users
+             */
+            var randomData = {
+                user:  {
+                    firstname: [
+                        "Bob",
+                        "Bobby"
+                    ],
+                    surname: "",
+                    email: ""
+                },
+                groups: [
+                    {
+                        title: "Admin"
+                    },
+                    {
+                        title: "User"
+                    },
+                    {
+                        title: "Editor"
+                    },
+                    {
+                        title: "Guest"
+                    }
+                ]
+            };
+
+
+            // ###################################### scope control functions // ###########################################
+
+        }]);

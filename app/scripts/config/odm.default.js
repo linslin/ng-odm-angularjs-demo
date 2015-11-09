@@ -29,7 +29,7 @@
                     resetOnInit: false,
                     columns: [ // localStorageDB is automatically adding a unique ID attribute to every table.
                         {name: 'firstname', type: 'text'},
-                        {name: 'sirname', type: 'text'},
+                        {name: 'surname', type: 'text'},
                         {name: 'email', type: 'text'},
                         {name: 'web', type: 'text'}
                     ]

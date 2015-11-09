@@ -28,7 +28,7 @@ angular.module('angularDemoApp')
              * @param user
              */
             $scope.error = {
-                sirname: false,
+                surname: false,
                 firstname: false,
                 email: false
             };
@@ -37,10 +37,10 @@ angular.module('angularDemoApp')
              * Hold default form data
              *
              * @name  defaultFormData
-             * @type {{sirname: string, firstname: string, email: string}}
+             * @type {{surname: string, firstname: string, email: string}}
              */
             var defaultFormData = {
-                sirname: '',
+                surname: '',
                 firstname: '',
                 email: ''
             };
@@ -125,11 +125,11 @@ angular.module('angularDemoApp')
                     $scope.error.firstname = false;
                 }
 
-                if (user === undefined || user.sirname === undefined || String(user.sirname).length === 0) {
+                if (user === undefined || user.surname === undefined || String(user.surname).length === 0) {
                     valid = false;
-                    $scope.error.sirname = true;
+                    $scope.error.surname = true;
                 } else {
-                    $scope.error.sirname = false;
+                    $scope.error.surname = false;
                 }
 
                 if (user === undefined || user.email === undefined || String(user.email).length === 0) {
@@ -146,7 +146,7 @@ angular.module('angularDemoApp')
                     //Setup user model
                     userModel.ID = null;
                     userModel.firstname = user.firstname;
-                    userModel.sirname = user.sirname;
+                    userModel.surname = user.surname;
                     userModel.email = user.email;
 
                     //Save to local storage db
@@ -155,7 +155,7 @@ angular.module('angularDemoApp')
                     $scope.users.push({
                         ID: userModel.ID,
                         firstname: userModel.firstname,
-                        sirname: userModel.sirname,
+                        surname: userModel.surname,
                         email: userModel.email,
                         group: defaultGroupData
                     });
