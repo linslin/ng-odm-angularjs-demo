@@ -74,5 +74,22 @@ angular.module('angularDemoApp')
              */
             $scope.generateSmallStack = function () {
                 generateRandomData(25);
+            };
+
+            /**
+             * $scope action generate small data stack
+             */
+            $scope.generateBigStack = function () {
+                generateRandomData(1000);
+            }
+
+            /**
+             * $scope action generate small data stack
+             */
+            $scope.deleteAllData = function () {
+                //cleanup data
+                userModel.deleteAll();
+                userGroupModel.deleteAll();
+                userGroupHasUserModel.deleteAll();
             }
         }]);
