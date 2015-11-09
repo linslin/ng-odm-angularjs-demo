@@ -34,7 +34,23 @@ angular.module('angularDemoApp')
             email: false
         };
 
-        $scope.form = {};
+        /**
+         * Hold default form data
+         *
+         * @name  defaultFormData
+         * @type {{sirname: string, firstname: string, email: string}}
+         */
+        var defaultFormData = {
+            sirname: '',
+            firstname: '',
+            email: ''
+        };
+
+        /**
+         * Default alert box state
+         * @type {boolean}
+         */
+        $scope.showAlert = false;
 
 
         // ###################################### scope control functions // ###########################################
@@ -71,6 +87,7 @@ angular.module('angularDemoApp')
                 $scope.error.email = false;
             }
 
+
             //save if valid
             if (valid) {
 
@@ -89,13 +106,17 @@ angular.module('angularDemoApp')
                         email: userModel.email
                     });
 
-                    //reset form data
-                    $scope.user.firstname = '';
-                    $scope.user.sirname = '';
-                    $scope.user.email = '';
-                });
-            }
+                    //set alert
+                    $scope.showAlert = true;
 
+                    //reset form
+                    $scope.addUserForm.$setPristine();
+                    $scope.user = angular.copy(defaultFormData);
+                });
+            } else {
+                //set alert
+                $scope.showAlert = false;
+            }
         };
 
         /**

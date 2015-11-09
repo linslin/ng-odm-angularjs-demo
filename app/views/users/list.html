@@ -10,7 +10,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="(key, user) in users"  class="repeat-item">
+        <tr ng-repeat="(key, user) in users | orderBy: '-ID'"  class="repeat-item">
             <th scope="row" ng-bind="user.ID"></th>
             <td ng-bind="user.firstname"></td>
             <td ng-bind="user.sirname"></td>

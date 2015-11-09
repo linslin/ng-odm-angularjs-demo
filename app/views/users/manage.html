@@ -1,6 +1,10 @@
 <h4>Manage Users</h4>
 <div ng-controller="UserManageCtrl">
-    <form class="form-horizontal" name="form.addUserForm">
+    <div ng-show="showAlert" class="alert alert-success animate">
+        <a href="javascript:void(0);" class="close" ng-click="showAlert = false" aria-label="close" title="close">×</a>
+        <strong>User added successfully</strong>
+    </div>
+    <form class="form-horizontal" name="addUserForm">
         <div class="form-group" ng-class="{'has-error': error.firstname}">
             <label for="firstname" class="control-label col-xs-2">Firstname</label>
             <div class="col-xs-10">
@@ -37,7 +41,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(key, user) in users"  class="repeat-item">
+            <tr ng-repeat="(key, user) in users | orderBy: '-ID'"  class="repeat-item">
                 <th scope="row" ng-bind="user.ID"></th>
                 <td ng-bind="user.firstname"></td>
                 <td ng-bind="user.sirname"></td>
