@@ -1,0 +1,39 @@
+<h4>Manage Usergroups</h4>
+<div ng-controller="UserGroupManageCtrl">
+    <div ng-show="showAlert" class="alert alert-success animate">
+        <a href="javascript:void(0);" class="close" ng-click="showAlert = false" aria-label="close" title="close">×</a>
+        <strong>User added successfully</strong>
+    </div>
+    <form class="form-horizontal" name="addUserGroupForm" novalidate>
+        <div class="form-group" ng-class="{'has-error': error.title}">
+            <label for="title" class="control-label col-xs-2">Firstname</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="title" name="title" ng-model="userGroup.title" placeholder="Title" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addUserGroup(userGroup);">Add usergroup</button>
+            </div>
+        </div>
+    </form>
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Users in group</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, userGroup) in userGroups | orderBy: '-ID'"  class="repeat-item">
+                <th scope="row" ng-bind="userGroup.ID"></th>
+                <td ng-bind="userGroup.title"></td>
+                <td ng-init="getUserGroupCount(userGroup.ID);" ng-bind="userGroup.userCount"></td>
+                <td><button type="button" ng-click="deleteUserGroup(userGroup.ID);" class="btn pull-right btn-danger">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

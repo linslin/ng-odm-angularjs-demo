@@ -43,18 +43,19 @@
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/main.html',
-                    controller: 'MainCtrl',
-                    controllerAs: 'main'
+                    controller: 'MainCtrl'
                 })
                 .when('/listUsers', {
                     templateUrl: 'views/users/list.html',
-                    controller: 'UserListCtrl',
-                    controllerAs: 'list'
+                    controller: 'UserListCtrl'
                 })
                 .when('/manageUsers', {
                     templateUrl: 'views/users/manage.html',
-                    controller: 'UserManageCtrl',
-                    controllerAs: 'list'
+                    controller: 'UserManageCtrl'
+                })
+                .when('/manageUserGroups', {
+                    templateUrl: 'views/userGroups/manage.html',
+                    controller: 'UserGroupManageCtrl'
                 })
                 .otherwise({
                     redirectTo: '/'

@@ -4,7 +4,7 @@
         <a href="javascript:void(0);" class="close" ng-click="showAlert = false" aria-label="close" title="close">×</a>
         <strong>User added successfully</strong>
     </div>
-    <form class="form-horizontal" name="addUserForm">
+    <form class="form-horizontal" name="addUserForm" novalidate>
         <div class="form-group" ng-class="{'has-error': error.firstname}">
             <label for="firstname" class="control-label col-xs-2">Firstname</label>
             <div class="col-xs-10">
@@ -28,7 +28,6 @@
                 <button type="submit" class="btn btn-primary pull-right" ng-click="addUser(user);">Add user</button>
             </div>
         </div>
-        <p>Pristine: {{form.$pristine}}</p>
     </form>
     <div class="panel panel-default">
         <table class="table">
