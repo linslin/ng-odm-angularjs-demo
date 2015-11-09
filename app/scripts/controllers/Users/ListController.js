@@ -21,9 +21,7 @@ angular.module('angularDemoApp')
         /**
          * Init users
          */
-        userModel.findAll().then(function(){
-            $scope.users = userModel.data;
-        });
+        $scope.users = userModel.findAll();
 
 
         // ###################################### scope control functions // ###########################################

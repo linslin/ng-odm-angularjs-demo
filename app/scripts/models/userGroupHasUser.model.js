@@ -20,7 +20,7 @@
      */
     angular
         .module('model.userGroupHasUser', []) // [-_-]
-        .factory('userGroupHasUserModel', ['$odm', userGroupHasUserModel]);
+        .factory('userGroupHasUserModel', ['$odm', 'lodash', userGroupHasUserModel]);
 
 
     /**
@@ -30,7 +30,7 @@
      *
      * @returns {self}
      */
-    function userGroupHasUserModel($odm) {
+    function userGroupHasUserModel($odm, lodash) {
 
         //Init object
         var self = this;

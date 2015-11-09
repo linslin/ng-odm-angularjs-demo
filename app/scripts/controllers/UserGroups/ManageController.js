@@ -21,9 +21,7 @@ angular.module('angularDemoApp')
         /**
          * Init users
          */
-        userGroupModel.findAll().then(function(){
-            $scope.userGroups = userGroupModel.data;
-        });
+        $scope.userGroups = userGroupModel.findAll();
 
         /**
          * User Add error scope
@@ -79,20 +77,19 @@ angular.module('angularDemoApp')
                 userGroupModel.title = userGroup.title;
 
                 //Save to local storage db
-                userGroupModel.save().then(function(){
+                userGroupModel.save();
 
-                    $scope.userGroups.push({
-                        ID: userGroupModel.ID,
-                        title: userGroupModel.title
-                    });
-
-                    //set alert
-                    $scope.showAlert = true;
-
-                    //reset form
-                    $scope.addUserGroupForm.$setPristine();
-                    $scope.userGroups = angular.copy(defaultFormData);
+                $scope.userGroups.push({
+                    ID: userGroupModel.ID,
+                    title: userGroupModel.title
                 });
+
+                //set alert
+                $scope.showAlert = true;
+
+                //reset form
+                $scope.addUserGroupForm.$setPristine();
+                $scope.userGroup = angular.copy(defaultFormData);
             } else {
                 //set alert
                 $scope.showAlert = false;
@@ -107,17 +104,20 @@ angular.module('angularDemoApp')
          * @returns {*}
          */
         $scope.getUserGroupCount = function (userGroupId) {
-            userGroupHasUserModel.findAllByAttributes({userID: userGroupId}).then(function(){
-                //search for your to delete from scope
-                var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
-                    return chr.ID == userGroupId;
-                });
 
-                //validate search result
-                if (indexToDelete !== -1) {
-                    $scope.userGroups[indexToDelete].userCount = userGroupHasUserModel.data.length;
-                }
+            var userGroupData =  userGroupHasUserModel.findAllByAttributes({groupId: userGroupId});
+
+            console.log(userGroupHasUserModel.countByAttributes({groupId: userGroupId}));
+
+            //search for your to delete from scope
+            var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
+                return chr.ID == userGroupId;
             });
+
+            //validate search result
+            if (indexToDelete !== -1) {
+                $scope.userGroups[indexToDelete].userCount = userGroupHasUserModel.countByAttributes({groupId: userGroupId});
+            }
         };
 
         /**
@@ -128,20 +128,20 @@ angular.module('angularDemoApp')
         $scope.deleteUserGroup = function (userGroupId) {
 
             //delete all users in group
-            userGroupHasUserModel.deleteByAttributes({ "groupId": userGroupId}).then(function () {
-                //delete group
-                if (userGroupModel.deleteByPk(userGroupId)) {
+            userGroupHasUserModel.deleteByAttributes({ "groupId": userGroupId});
 
-                    //search for your to delete from scope
-                    var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
-                        return chr.ID == userGroupId;
-                    });
+            //delete group
+            if (userGroupModel.deleteByPk(userGroupId)) {
 
-                    //validate search result
-                    if (indexToDelete !== -1) {
-                        $scope.userGroups.splice(indexToDelete, 1);
-                    }
+                //search for your to delete from scope
+                var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
+                    return chr.ID == userGroupId;
+                });
+
+                //validate search result
+                if (indexToDelete !== -1) {
+                    $scope.userGroups.splice(indexToDelete, 1);
                 }
-            });
+            }
         };
     }]);
