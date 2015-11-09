@@ -1,1 +1,50 @@
-<p>List view</p>
+<h4>Manage Users</h4>
+<div ng-controller="UserManageCtrl">
+    <form class="form-horizontal" name="form.addUserForm">
+        <div class="form-group" ng-class="{'has-error': error.firstname}">
+            <label for="firstname" class="control-label col-xs-2">Firstname</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="firstname" name="firstname" ng-model="user.firstname" placeholder="Firstname" />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': error.sirname}">
+            <label for="sirname" class="control-label col-xs-2">Sirname</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="sirname" ng-model="user.sirname" placeholder="Sirname">
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': error.email}">
+            <label for="email" class="control-label col-xs-2">Email</label>
+            <div class="col-xs-10">
+                <input type="email" class="form-control" id="email" ng-model="user.email"  placeholder="you@example.com" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addUser(user);">Add user</button>
+            </div>
+        </div>
+        <p>Pristine: {{form.$pristine}}</p>
+    </form>
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, user) in users"  class="repeat-item">
+                <th scope="row" ng-bind="user.ID"></th>
+                <td ng-bind="user.firstname"></td>
+                <td ng-bind="user.sirname"></td>
+                <td ng-bind="user.email"></td>
+                <td><button type="button" ng-click="deleteUser(user.ID);" class="btn pull-right btn-danger">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

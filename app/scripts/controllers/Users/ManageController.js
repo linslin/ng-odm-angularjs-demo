@@ -13,10 +13,108 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserManageCtrl', function () {
-        this.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-    });
+    .controller('UserManageCtrl', [ '$scope', 'userModel', 'lodash' ,function ($scope, userModel, lodash) {
+
+        // ################################ controller objects default states // #######################################
+
+        /**
+         * Init users
+         */
+        userModel.findAll().then(function(){
+            $scope.users = userModel.data;
+        });
+
+        /**
+         * User Add error scope
+         * @param user
+         */
+        $scope.error = {
+            sirname: false,
+            firstname: false,
+            email: false
+        };
+
+        $scope.form = {};
+
+
+        // ###################################### scope control functions // ###########################################
+
+        /**
+         * Add user
+         *
+         * @param {object} user
+         */
+        $scope.addUser = function (user) {
+
+            //Init valid state
+            var valid = true;
+
+            //validate input
+            if (user === undefined || user.firstname === undefined || String(user.firstname).length === 0) {
+                valid = false;
+                $scope.error.firstname = true;
+            } else {
+                $scope.error.firstname = false;
+            }
+
+            if (user === undefined || user.sirname === undefined || String(user.sirname).length === 0) {
+                valid = false;
+                $scope.error.sirname = true;
+            } else {
+                $scope.error.sirname = false;
+            }
+
+            if (user === undefined || user.email === undefined || String(user.email).length === 0) {
+                valid = false;
+                $scope.error.email = true;
+            } else {
+                $scope.error.email = false;
+            }
+
+            //save if valid
+            if (valid) {
+
+                //Setup user model
+                userModel.ID = null;
+                userModel.firstname = user.firstname;
+                userModel.sirname = user.sirname;
+                userModel.email = user.email;
+
+                //Save to local storage db
+                userModel.save().then(function(){
+                    $scope.users.push({
+                        ID: userModel.ID,
+                        firstname: userModel.firstname,
+                        sirname: userModel.sirname,
+                        email: userModel.email
+                    });
+
+                    //reset form data
+                    $scope.user.firstname = '';
+                    $scope.user.sirname = '';
+                    $scope.user.email = '';
+                });
+            }
+
+        };
+
+        /**
+         * Delete user action
+         *
+         * @param userId
+         */
+        $scope.deleteUser = function (userId) {
+            if (userModel.deleteByPk(userId)) {
+
+                //search for your to delete from scope
+                var indexToDelete = lodash.findIndex($scope.users, function (chr) {
+                    return chr.ID == userId;
+                });
+
+                //validate search result
+                if (indexToDelete !== -1) {
+                    $scope.users.splice(indexToDelete, 1);
+                }
+            }
+        };
+    }]);

@@ -27,25 +27,4 @@ angular.module('angularDemoApp')
 
 
         // ###################################### scope control functions // ###########################################
-
-        /**
-         * Delete user action
-         *
-         * @param userId
-         */
-        $scope.deleteUser = function (userId) {
-            if (userModel.deleteByPk(userId)) {
-
-                //search for your to delete from scope
-                var indexToDelete = lodash.findIndex($scope.users, function (chr) {
-                    return chr.ID == userId;
-                });
-
-                //validate search result
-                if (indexToDelete !== -1) {
-                    console.log(indexToDelete);
-                    $scope.users.splice(indexToDelete, 1);
-                }
-            }
-        };
     }]);
