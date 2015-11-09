@@ -13,8 +13,8 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserListCtrl', [ 'userModel', 'userGroupModel', '$scope'
-        ,function (userModel, userGroupModel, $scope) {
+    .controller('UserListCtrl', [ 'userModel', 'userGroupModel', '$scope', 'lodash'
+        ,function (userModel, userGroupModel, $scope, lodash) {
 
          // ################################ controller objects default states // ######################################
 
@@ -24,4 +24,28 @@ angular.module('angularDemoApp')
         userModel.findAll().then(function(){
             $scope.users = userModel.data;
         });
+
+
+        // ###################################### scope control functions // ###########################################
+
+        /**
+         * Delete user action
+         *
+         * @param userId
+         */
+        $scope.deleteUser = function (userId) {
+            if (userModel.deleteByPk(userId)) {
+
+                //search for your to delete from scope
+                var indexToDelete = lodash.findIndex($scope.users, function (chr) {
+                    return chr.ID == userId;
+                });
+
+                //validate search result
+                if (indexToDelete !== -1) {
+                    console.log(indexToDelete);
+                    $scope.users.splice(indexToDelete, 1);
+                }
+            }
+        };
     }]);

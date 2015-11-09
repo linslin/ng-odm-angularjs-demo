@@ -12,20 +12,4 @@
 'use strict';
 
 angular.module('angularDemoApp')
-    .controller('MainCtrl', ['$odm', 'userModel', function ($odm, userModel) {
-
-
-        userModel.ID = null;
-        userModel.namespace = 'test';
-        userModel.save().then(function () {
-            userModel.findAll().then(function () {
-                console.log(userModel);
-            });
-        });
-
-        this.awesomeThings = [
-            'HTML5 Boilerplate',
-            'AngularJS',
-            'Karma'
-        ];
-    }]);
+    .controller('MainCtrl', ['$odm', 'userModel', function () {}]);

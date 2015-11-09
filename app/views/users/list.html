@@ -1,1 +1,22 @@
-<p>List view</p>
+<h4>User List</h4>
+<div class="panel panel-default">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(key, user) in users"  class="repeat-item">
+            <th scope="row" ng-bind="user.ID"></th>
+            <td ng-bind="user.firstname"></td>
+            <td ng-bind="user.sirname"></td>
+            <td ng-bind="user.email"></td>
+            <td><button type="button" ng-click="deleteUser(user.ID);"class="btn btn-danger">X</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
