@@ -13,11 +13,11 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserManageCtrl', [ '$scope', 'userModel', 'userGroupModel', 'userGroupHasUserModel', 'lodash' ,
-        function ($scope, userModel, userGroupModel, userGroupHasUserModel, lodash) {
+    .controller('UserManageCtrl', [ '$scope', 'userModel', 'userGroupModel', 'userGroupHasUserModel', 'lodash', '$rootScope', '$timeout',
+        function ($scope, userModel, userGroupModel, userGroupHasUserModel, lodash, $rootScope, $timeout) {
 
 
-            // ################################ controller objects default states // #######################################
+            // ############################### controller objects default states // #####################################
 
             /**
              * Init users groups
@@ -112,6 +112,10 @@ angular.module('angularDemoApp')
 
                 //generate group data for UI
                 generateGroupData();
+
+                $timeout(function () {
+                    $rootScope.$broadcast('toggleLoading', false);
+                }, 550);
             }
 
 
@@ -227,7 +231,6 @@ angular.module('angularDemoApp')
 
                 //try save
                 userGroupHasUserModel.save();
-                console.log(userId);
 
                 //search for your to delete from scope
                 var indexToModify = lodash.findIndex($scope.users, function (chr) {
@@ -238,7 +241,6 @@ angular.module('angularDemoApp')
                 //validate search result
                 if (indexToModify !== -1) {
                     $scope.users[indexToModify].group.ID = userGroupId;
-                    console.log($scope.users[indexToModify]);
                     $scope.users[indexToModify].group.title = userGroupTitle;
                 }
             };

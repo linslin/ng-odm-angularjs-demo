@@ -91,9 +91,13 @@
                 //check if current path is pageRoute
                 if ($location.path() === pageRoute) {
                     return true;
+                } else {
+                    return false;
                 }
+            };
 
-                return false;
-            }
+            $scope.setLoading = function () {
+              $rootScope.$broadcast('toggleLoading', true);
+            };
         }
 })();

@@ -29,7 +29,8 @@ angular
         'model.userGroup',
         'model.userGroupHasUser',
         'app.startupRoutine',
-        'app.route'
+        'app.route',
+        'app.ui'
     ])
     .run(['startupRoutine', run]);
 

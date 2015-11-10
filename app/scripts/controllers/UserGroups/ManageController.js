@@ -13,10 +13,11 @@
 
 
 angular.module('angularDemoApp')
-    .controller('UserGroupManageCtrl', [ '$scope', 'userGroupModel', 'lodash', 'userGroupHasUserModel',
-        function ($scope, userGroupModel, lodash, userGroupHasUserModel) {
+    .controller('UserGroupManageCtrl', [ '$scope', 'userGroupModel', 'lodash', 'userGroupHasUserModel', '$timeout', '$rootScope',
+        function ($scope, userGroupModel, lodash, userGroupHasUserModel, $timeout, $rootScope) {
 
         // ################################ controller objects default states // #######################################
+
 
         /**
          * Init users
@@ -144,4 +145,8 @@ angular.module('angularDemoApp')
                 }
             }
         };
+
+        $timeout(function () {
+            $rootScope.$broadcast('toggleLoading', false);
+        }, 550);
     }]);

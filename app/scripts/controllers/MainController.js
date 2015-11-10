@@ -12,4 +12,10 @@
 'use strict';
 
 angular.module('angularDemoApp')
-    .controller('MainCtrl', ['$odm', 'userModel', function () {}]);
+    .controller('MainCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
+
+        /**
+         *
+         */
+        $rootScope.$broadcast('toggleLoading', false);
+    }]);
