@@ -12,8 +12,8 @@
 'use strict';
 
 angular.module('angularDemoApp')
-    .controller('ContentGeneratorCtrl', ['$scope', 'userModel', 'userGroupModel','userGroupHasUserModel', 'mock.surname', 'mock.firstname', 'mock.email',
-        function ($scope, userModel, userGroupModel, userGroupHasUserModel, mockSurname, mockFirstname, mockEmail) {
+    .controller('ContentGeneratorCtrl', ['$scope', 'userModel', 'userGroupModel','userGroupHasUserModel', 'mock.surname', 'mock.firstname', 'mock.email', '$timeout',
+        function ($scope, userModel, userGroupModel, userGroupHasUserModel, mockSurname, mockFirstname, mockEmail, $timeout) {
 
             // ############################# controller objects default states // ######################################
 
@@ -30,6 +30,31 @@ angular.module('angularDemoApp')
             };
 
 
+            /**
+             * Dialog modal view toggle
+             * @type {boolean}
+             */
+            $scope.openDialog = false;
+
+            /**
+             * Loading progress 0 to 100.
+             * @type {number}
+             */
+            $scope.loadingProgress = 0;
+
+            /**
+             * Loading item count
+             * @type {number}
+             */
+            $scope.itemCount = 0;
+
+            /**
+             * Loading item count max
+             * @type {number}
+             */
+            $scope.itemCountMax = 0;
+
+
             // ################################### scope control functions // ##########################################
 
 
@@ -38,6 +63,9 @@ angular.module('angularDemoApp')
              * @param {int} count
              */
             function generateRandomData(count) {
+
+                //Init
+                $scope.itemCountMax = count;
 
                 //cleanup data
                 userModel.deleteAll();
@@ -51,36 +79,70 @@ angular.module('angularDemoApp')
                     userGroupModel.save();
                 });
 
-                //insert users
-                for (var i = 0; i < count; i++) {
-                    userModel.ID = null;
-                    userModel.firstname = mockFirstname.data[Math.floor((Math.random() * mockFirstname.data.length))];
-                    userModel.surname = mockSurname.data[Math.floor((Math.random() * mockSurname.data.length))];
-                    userModel.email = mockEmail.data[Math.floor((Math.random() * mockEmail.data.length))];
-                    userModel.save();
+                function myTimeout (i) {
+                    $timeout(function() {
+                        userModel.ID = null;
+                        userModel.firstname = mockFirstname.data[Math.floor((Math.random() * mockFirstname.data.length))];
+                        userModel.surname = mockSurname.data[Math.floor((Math.random() * mockSurname.data.length))];
+                        userModel.email = mockEmail.data[Math.floor((Math.random() * mockEmail.data.length))];
+                        userModel.save();
+
+                        userGroupHasUserModel.ID = null;
+                        userGroupHasUserModel.userId = userModel.ID;
+                        userGroupHasUserModel.groupId = Math.floor((Math.random() * 4))
+                        userGroupHasUserModel.save();
+
+                        //setup progress bar status
+                        $scope.loadingProgress = Math.floor(((i+1) / count) * 100);
+                        $scope.itemCount = i+1;
+
+
+                        if ((i+1) >= count) {
+                            //close dialog after short delay
+                            $timeout(function() {
+                                $scope.openDialog = false;
+                            }, 1500);
+                        }
+                    }, (i+1) * 15);
                 }
 
-                // put users into group
-                angular.forEach(userModel.findAll(), function (user, key) {
-                    userGroupHasUserModel.ID = null;
-                    userGroupHasUserModel.userId = user.ID;
-                    userGroupHasUserModel.groupId = Math.floor((Math.random() * 4))
-                    userGroupHasUserModel.save();
-                });
+                //insert users
+                for (var i = 0; i < count; i++) {
+                    myTimeout(i);
+                }
+
             }
 
             /**
              * $scope action generate small data stack
              */
             $scope.generateSmallStack = function () {
-                generateRandomData(25);
+
+                //Init progress bar
+                $scope.loadingProgress = 0;
+                $scope.itemCount = 0;
+                $scope.openDialog = true;
+
+                //close dialog after short delay
+                $timeout(function() {
+                    generateRandomData(25);
+                }, 500);
             };
 
             /**
              * $scope action generate small data stack
              */
             $scope.generateBigStack = function () {
-                generateRandomData(1000);
+
+                //Init progress bar
+                $scope.loadingProgress = 0;
+                $scope.itemCount = 0;
+                $scope.openDialog = true;
+
+                //close dialog after short delay
+                $timeout(function() {
+                    generateRandomData(1500);
+                }, 500);
             }
 
             /**

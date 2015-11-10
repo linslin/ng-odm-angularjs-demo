@@ -48,4 +48,26 @@
       </div>
     </div>
   </div>
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog" ng-class="{'in active': openDialog}">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Please wait .. creating dummy data...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:{{loadingProgress}}%">
+                                {{itemCount}} / {{itemCountMax}} Items - {{loadingProgress}}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
