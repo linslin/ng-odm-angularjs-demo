@@ -106,10 +106,6 @@ angular.module('angularDemoApp')
          */
         $scope.getUserGroupCount = function (userGroupId) {
 
-            var userGroupData =  userGroupHasUserModel.findAllByAttributes({groupId: userGroupId});
-
-            console.log(userGroupHasUserModel.countByAttributes({groupId: userGroupId}));
-
             //search for your to delete from scope
             var indexToDelete = lodash.findIndex($scope.userGroups, function (chr) {
                 return chr.ID == userGroupId;
