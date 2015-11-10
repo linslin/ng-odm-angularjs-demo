@@ -39,10 +39,10 @@
 
                 <div class="collapse navbar-collapse" id="js-navbar-collapse">
                     <ul class="nav navbar-nav" ng-controller="routeServiceCtrl">
-                        <li ng-class="{active : isPage('/')}"><a href="#/" ng-click="setLoading();">Home</a></li>
-                        <li ng-class="{active : isPage('/listUsers')}"><a ng-href="#/listUsers" ng-click="setLoading();">List Users</a></li>
-                        <li ng-class="{active : isPage('/manageUsers')}"><a ng-href="#/manageUsers" ng-click="setLoading();">Manage Users</a></li>
-                        <li ng-class="{active : isPage('/manageUserGroups')}"><a ng-href="#/manageUserGroups" ng-click="setLoading();">Manage Usergroups</a></li>
+                        <li ng-class="{active : isPage('/')}"><a href="#/" ng-click="setLoading('/');">Home</a></li>
+                        <li ng-class="{active : isPage('/listUsers')}"><a ng-href="#/listUsers" ng-click="setLoading('/listUsers');">List Users</a></li>
+                        <li ng-class="{active : isPage('/manageUsers')}"><a ng-href="#/manageUsers" ng-click="setLoading('/manageUsers');">Manage Users</a></li>
+                        <li ng-class="{active : isPage('/manageUserGroups')}"><a ng-href="#/manageUserGroups" ng-click="setLoading('/manageUserGroups');">Manage Usergroups</a></li>
                         <li><a ng-href="https://github.com/linslin/ng-odm-angularjs-demo">Github</a></li>
                     </ul>
                 </div>

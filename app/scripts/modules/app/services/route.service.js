@@ -96,8 +96,10 @@
                 }
             };
 
-            $scope.setLoading = function () {
-              $rootScope.$broadcast('toggleLoading', true);
+            $scope.setLoading = function (pageRoute) {
+                if ($location.path() !== pageRoute) {
+                    $rootScope.$broadcast('toggleLoading', true);
+                }
             };
         }
 })();
