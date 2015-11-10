@@ -29,6 +29,22 @@
             </div>
         </div>
     </form>
+    <nav class="text-center" ng-show="pageCount > 1">
+        <ul class="pagination">
+            <li>
+                <a href="" ng-click="setPage(1);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="n in [] | range:pageCount" ng-class="{'active': currentPage == (n +1)}">
+                <a href=""  ng-click="setPage(n +1);">{{n +1}}</a></li>
+            <li>
+                <a href="" ng-click="setPage(pageCount);" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
     <div class="panel panel-default">
         <table class="table">
             <thead>
@@ -42,7 +58,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="(key, user) in users | orderBy: '-ID'"  class="repeat-item">
+            <tr ng-repeat="(key, user) in currentPageUserItem | orderBy: '-ID'"  class="repeat-item">
                 <th scope="row" ng-bind="user.ID"></th>
                 <td ng-bind="user.firstname"></td>
                 <td ng-bind="user.surname"></td>

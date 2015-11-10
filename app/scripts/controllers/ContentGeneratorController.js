@@ -149,7 +149,7 @@ angular.module('angularDemoApp')
 
                 //close dialog after short delay
                 $timeout(function() {
-                    generateRandomData(1500);
+                    generateRandomData(1250);
                 }, 500);
             }
 

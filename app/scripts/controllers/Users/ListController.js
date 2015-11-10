@@ -33,13 +33,12 @@ angular.module('angularDemoApp')
          * Hold max count of pages at 50 items per pae.
          * {Integer}
          */
-        $scope.pageCount = Math.floor(userModel.findAll().length / itemPerPage) + 1;
+        $scope.pageCount = Math.ceil(userModel.findAll().length / itemPerPage);
         /**
          *  Current page id
           * @type {number}
          */
         $scope.currentPage = 1;
-
 
         /**
          * Setup init state of current page user items

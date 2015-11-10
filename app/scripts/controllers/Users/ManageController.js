@@ -16,12 +16,38 @@ angular.module('angularDemoApp')
     .controller('UserManageCtrl', [ '$scope', 'userModel', 'userGroupModel', 'userGroupHasUserModel', 'lodash' ,
         function ($scope, userModel, userGroupModel, userGroupHasUserModel, lodash) {
 
+
             // ################################ controller objects default states // #######################################
 
             /**
              * Init users groups
              */
             $scope.userGroups = userGroupModel.findAll();
+
+            /**
+             * Pagination item per page number
+             * @type {number}
+             */
+            var itemPerPage = 90;
+
+            /**
+             * Hold max count of pages at 50 items per pae.
+             * {Integer}
+             */
+            $scope.pageCount = 1;
+
+            /**
+             *  Current page id
+             * @type {number}
+             */
+            $scope.currentPage = 1;
+
+
+            /**
+             * Setup init state of current page user items
+             * @type {Array.<T>}
+             */
+            $scope.currentPageUserItem = {};
 
             /**
              * User Add error scope
@@ -61,16 +87,13 @@ angular.module('angularDemoApp')
              */
             $scope.showAlert = false;
 
-            /**
-             * Default alert box state
-             * @type {boolean}
-             */
 
             /**
              * Default alert box state
              * @type {Array}
              */
             $scope.users = [];
+
 
 
             // ###################################### scope control functions // ###########################################
@@ -81,9 +104,24 @@ angular.module('angularDemoApp')
             function init () {
 
                 //Get all users
-                var userData = userModel.findAll();
+                $scope.users = userModel.findAll();
+                $scope.pageCount = Math.ceil($scope.users.length / itemPerPage);
 
-                angular.forEach(userData, function (user, key){
+                //slice item for current page
+                $scope.currentPageUserItem =  $scope.users.slice((itemPerPage * ($scope.currentPage -1 )),itemPerPage *$scope.currentPage);
+
+                //generate group data for UI
+                generateGroupData();
+            }
+
+
+            /**
+             * Will add group data to current page items
+             */
+            function generateGroupData () {
+
+                angular.forEach($scope.currentPageUserItem, function (user, key){
+
 
                     // clone object to make async handling work here
                     var userGroupHasUserData = userGroupHasUserModel.findByAttributes({userId: user.ID});
@@ -102,7 +140,7 @@ angular.module('angularDemoApp')
                     }
 
                     // set group data & and user data
-                    $scope.users.push(user);
+                    $scope.currentPageUserItem[key] = user;
                 });
             }
 
@@ -203,9 +241,8 @@ angular.module('angularDemoApp')
                     console.log($scope.users[indexToModify]);
                     $scope.users[indexToModify].group.title = userGroupTitle;
                 }
-
-
             };
+
 
             /**
              * Delete user action
@@ -224,7 +261,31 @@ angular.module('angularDemoApp')
                     if (indexToDelete !== -1) {
                         $scope.users.splice(indexToDelete, 1);
                     }
+
+                    //search for your to delete from scope
+                    var indexToDelete = lodash.findIndex($scope.currentPageUserItem, function (chr) {
+                        return chr.ID == userId;
+                    });
+                    //validate search result
+                    if (indexToDelete !== -1) {
+                        $scope.currentPageUserItem.splice(indexToDelete, 1);
+                    }
                 }
+            };
+
+
+            /**
+             * Set page action
+             *
+             * @param {number} pageId
+             */
+            $scope.setPage = function (pageId) {
+
+                $scope.currentPage = pageId;
+                $scope.currentPageUserItem = $scope.users.slice((itemPerPage * ($scope.currentPage -1 )), itemPerPage *$scope.currentPage);
+
+                //generate group data for UI
+                generateGroupData();
             };
 
 
