@@ -1,7 +1,7 @@
 /**
  * angular-odm default configuration
  *
- * @name        config
+ * @name        ODMConfiguration
  * @author      Nils Gajsek <nils.gajsek@linslin.org>
  * @copyright   2015 linslin.org
  * @package     ng-odm-angularjs-demo
@@ -28,11 +28,25 @@
                     name: 'user',
                     resetOnInit: false,
                     columns: [ // localStorageDB is automatically adding a unique ID attribute to every table.
-                        {name: 'idExternal', type: 'integer'},
                         {name: 'firstname', type: 'text'},
-                        {name: 'sirname', type: 'text'},
+                        {name: 'surname', type: 'text'},
                         {name: 'email', type: 'text'},
                         {name: 'web', type: 'text'}
+                    ]
+                },
+                {
+                    name: 'userGroup',
+                    resetOnInit: false,
+                    columns: [ // localStorageDB is automatically adding a unique ID attribute to every table.
+                        {name: 'title', type: 'text'}
+                    ]
+                },
+                {
+                    name: 'userGroupHasUser',
+                    resetOnInit: false,
+                    columns: [ // localStorageDB is automatically adding a unique ID attribute to every table.
+                        {name: 'userId', type: 'integer'},
+                        {name: 'groupId', type: 'integer'}
                     ]
                 }
             ]

@@ -10,6 +10,7 @@
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
+    "ng-lodash": "0.3.0",
     "angular-odm": "git://github.com/linslin/angular-odm#develop"
   },
   "devDependencies": {

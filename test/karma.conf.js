@@ -31,10 +31,10 @@ module.exports = function(config) {
       'bower_components/angular-route/angular-route.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
+      'bower_components/ng-lodash/build/ng-lodash.js',
       'bower_components/localstoragedb/localstoragedb.js',
       'bower_components/angular-odm/angular-odm.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/ng-lodash/build/ng-lodash.js',
       // endbower
       "app/scripts/**/*.js",
       "test/mock/**/*.js",

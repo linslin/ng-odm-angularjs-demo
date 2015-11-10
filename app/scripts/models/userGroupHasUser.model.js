@@ -1,7 +1,7 @@
 /**
- * User model
+ * User group has user model
  *
- * @name        model.user
+ * @name        model.userGroupHasUser
  * @author      Nils Gajsek <info@linslin.org>
  * @copyright   Nils Gajsek
  * @package     ng-odm-angular.js-demo
@@ -19,37 +19,31 @@
      * User Model, Application model.
      */
     angular
-        .module('model.user', []) // [-_-]
-        .factory('userModel', ['$odm', userModel]);
+        .module('model.userGroupHasUser', []) // [-_-]
+        .factory('userGroupHasUserModel', ['$odm', 'lodash', userGroupHasUserModel]);
 
 
     /**
      * User model object
      *
-     * @param {object} model
+     * @param {object} $odm
      *
      * @returns {self}
      */
-    function userModel($odm) {
+    function userGroupHasUserModel($odm, lodash) {
 
         //Init object
         var self = this;
 
-        console.log($odm);
-
-
         //define model object table
-        self._table = 'user';
+        self._table = 'userGroupHasUser';
 
         //define model attributes configuration
         //every attribute is access able via "modelclass.attributeKey"
         // HINT: "modelclass.ID" is automatically added by localStorageDB
         self._attributes = [
-            {name: 'idExternal', type: 'integer'},
-            {name: 'firstname', type: 'text'},
-            {name: 'sirname', type: 'text'},
-            {name: 'email', type: 'text'},
-            {name: 'web', type: 'text'}
+            {name: 'userId', type: 'integer'},
+            {name: 'groupId', type: 'integer'}
         ];
 
         //Init model and return -> will merge modelChild and parent class

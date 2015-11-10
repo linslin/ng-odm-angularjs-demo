@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -13,59 +13,72 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="angularDemoApp">
+    <link rel="stylesheet" href="http://css-spinners.com/css/spinner/spinner.css">
+</head>
+<body ng-app="angularDemoApp">
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#js-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">angular-odm demo</a>
+                </div>
 
-            <a class="navbar-brand" href="#/">angular-odm demo</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">List</a></li>
-            </ul>
-          </div>
+                <div class="collapse navbar-collapse" id="js-navbar-collapse">
+                    <ul class="nav navbar-nav" ng-controller="routeServiceCtrl">
+                        <li ng-class="{active : isPage('/')}"><a href="#/" ng-click="setLoading('/');">Home</a></li>
+                        <li ng-class="{active : isPage('/listUsers')}"><a ng-href="#/listUsers" ng-click="setLoading('/listUsers');">List Users</a></li>
+                        <li ng-class="{active : isPage('/manageUsers')}"><a ng-href="#/manageUsers" ng-click="setLoading('/manageUsers');">Manage Users</a></li>
+                        <li ng-class="{active : isPage('/manageUserGroups')}"><a ng-href="#/manageUserGroups" ng-click="setLoading('/manageUserGroups');">Manage Usergroups</a></li>
+                        <li><a ng-href="https://github.com/linslin/ng-odm-angularjs-demo">Github</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="container">
-    <div ng-view=""></div>
+        <div ng-view=""></div>
     </div>
 
     <div class="footer">
-      <div class="container">
-        <p>Created by linslin | <a href="http://www.linslin.org">linslin.org</a> | <a href="http://www.github.com/linslin/angular-odm">angular-odm</a> at Github</p>
-      </div>
+        <div class="container">
+            <p>Created by linslin | <a href="http://www.linslin.org">linslin.org</a> | <a
+                    href="http://www.github.com/linslin/angular-odm">angular-odm</a> at Github</p>
+        </div>
+    </div>
+
+    <div id="loading-spinner" ng-controller="uiServiceCtrl" class="animate-show"  ng-show="loading">
+        <div class="spinner-loader">
+            Loading…
+        </div>
     </div>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <script>
+        !function (A, n, g, u, l, a, r) {
+            A.GoogleAnalyticsObject = l, A[l] = A[l] || function () {
+                        (A[l].q = A[l].q || []).push(arguments)
+                    }, A[l].l = +new Date, a = n.createElement(g),
+                    r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+        }(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
+        ga('create', 'UA-XXXXX-X');
+        ga('send', 'pageview');
     </script>
 
     <!-- build:js(.) scripts/vendor.js -->
@@ -79,20 +92,31 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/ng-lodash/build/ng-lodash.js"></script>
     <script src="bower_components/localstoragedb/localstoragedb.js"></script>
+    <script src="bower_components/angular-odm/angular-odm.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
 
-    <script src="bower_components/angular-odm/angular-odm.js"></script>
-    <script src="bower_components/ng-lodash/build/ng-lodash.min.js"></script>
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/config/odm.default.js"></script>
-        <script src="scripts/model/user.model.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/modules/app/app.js"></script>
+    <script src="scripts/modules/app/routines/startup.routine.js"></script>
+    <script src="scripts/modules/app/services/route.service.js"></script>
+    <script src="scripts/modules/app/services/ui.service.js"></script>
+    <script src="scripts/controllers/MainController.js"></script>
+    <script src="scripts/controllers/Users/ListController.js"></script>
+    <script src="scripts/controllers/Users/ManageController.js"></script>
+    <script src="scripts/controllers/UserGroups/ManageController.js"></script>
+    <script src="scripts/controllers/ContentGeneratorController.js"></script>
+    <script src="scripts/config/odm.default.js"></script>
+    <script src="scripts/mock/email.default.js"></script>
+    <script src="scripts/mock/firstname.default.js"></script>
+    <script src="scripts/mock/surname.default.js"></script>
+    <script src="scripts/models/user.model.js"></script>
+    <script src="scripts/models/userGroup.model.js"></script>
+    <script src="scripts/models/userGroupHasUser.model.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

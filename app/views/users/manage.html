@@ -1,0 +1,85 @@
+<h4>Manage Users</h4>
+<div ng-controller="UserManageCtrl">
+    <div ng-show="showAlert" class="alert alert-success animate">
+        <a href="javascript:void(0);" class="close" ng-click="showAlert = false" aria-label="close" title="close">×</a>
+        <strong>User added successfully</strong>
+    </div>
+    <form class="form-horizontal" name="addUserForm" novalidate>
+        <div class="form-group" ng-class="{'has-error': error.firstname}">
+            <label for="firstname" class="control-label col-xs-2">Firstname</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="firstname" name="firstname" ng-model="user.firstname" placeholder="Firstname" />
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': error.surname}">
+            <label for="surname" class="control-label col-xs-2">Lastname</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="surname" ng-model="user.surname" placeholder="Lastname">
+            </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': error.email}">
+            <label for="email" class="control-label col-xs-2">Email</label>
+            <div class="col-xs-10">
+                <input type="email" class="form-control" id="email" ng-model="user.email" placeholder="you@example.com" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="addUser(user);">Add user</button>
+            </div>
+        </div>
+    </form>
+    <nav class="text-center" ng-show="pageCount > 1">
+        <ul class="pagination">
+            <li>
+                <a href="" ng-click="setPage(1);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="n in [] | range:pageCount" ng-class="{'active': currentPage == (n +1)}">
+                <a href=""  ng-click="setPage(n +1);">{{n +1}}</a></li>
+            <li>
+                <a href="" ng-click="setPage(pageCount);" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Usergroup</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="(key, user) in currentPageUserItem | orderBy: '-ID'"  class="repeat-item">
+                <th scope="row" ng-bind="user.ID"></th>
+                <td ng-bind="user.firstname"></td>
+                <td ng-bind="user.surname"></td>
+                <td ng-bind="user.email"></td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span ng-bind="user.group.title"></span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0);">None</a></li>
+                            <li ng-repeat="(index, userGroup) in userGroups">
+                                <a href="javascript:void(0);" ng-click="setUserToGroup(user.ID, userGroup.ID, userGroup.title);" ng-bind="userGroup.title"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td><button type="button" ng-click="deleteUser(user.ID);" class="btn pull-right btn-danger">X</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
