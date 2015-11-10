@@ -18,6 +18,12 @@ angular.module('angularDemoApp')
             // ############################# controller objects default states // ######################################
 
             /**
+             * Holds dialog loading text to display
+             * @type {string}
+             */
+            $scope.loadingText = 'Please wait .. creating dummy data...';
+
+            /**
              * Init random data
              */
             var randomData = {
@@ -121,6 +127,7 @@ angular.module('angularDemoApp')
                 //Init progress bar
                 $scope.loadingProgress = 0;
                 $scope.itemCount = 0;
+                $scope.loadingText = 'Please wait .. creating dummy data...';
                 $scope.openDialog = true;
 
                 //close dialog after short delay
@@ -137,6 +144,7 @@ angular.module('angularDemoApp')
                 //Init progress bar
                 $scope.loadingProgress = 0;
                 $scope.itemCount = 0;
+                $scope.loadingText = 'Please wait .. creating dummy data...';
                 $scope.openDialog = true;
 
                 //close dialog after short delay
@@ -149,9 +157,22 @@ angular.module('angularDemoApp')
              * $scope action generate small data stack
              */
             $scope.deleteAllData = function () {
+
+                $scope.loadingProgress = 100;
+                $scope.itemCount = userModel.findAll().length + userGroupModel.findAll().length;
+                $scope.itemCountMax = userModel.findAll().length + userGroupModel.findAll().length;
+                $scope.loadingText = 'Please wait .. cleaning up data...';
+                $scope.openDialog = true;
+
                 //cleanup data
                 userModel.deleteAll();
                 userGroupModel.deleteAll();
                 userGroupHasUserModel.deleteAll();
+
+
+                //close dialog after short delay
+                $timeout(function() {
+                    $scope.openDialog = false;
+                }, 1500);
             }
         }]);
