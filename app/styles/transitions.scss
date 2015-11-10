@@ -2,10 +2,10 @@
    on the base class as well (.repeat-item) */
 .repeat-item.ng-enter,
 .repeat-item.ng-leave {
-  -webkit-transition:0.5s linear all;
-  -moz-transition:0.5s linear all;
-  -o-transition:0.5s linear all;
-  transition:0.5s linear all;
+  -webkit-transition:0.25s linear all;
+  -moz-transition:0.25s linear all;
+  -o-transition:0.25s linear all;
+  transition:0.25s linear all;
 }
 
 .repeat-item.ng-enter,
@@ -26,8 +26,8 @@
 }
 
 
-.ng-enter.ng-enter-active,
-.ng-move.ng-move-active {
+animate.ng-enter.ng-enter-active,
+.animate.ng-move.ng-move-active {
    opacity:1;
  }
 
