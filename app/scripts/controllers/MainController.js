@@ -14,8 +14,10 @@
 angular.module('angularDemoApp')
     .controller('MainCtrl', ['$scope', '$rootScope', function ($scope, $rootScope) {
 
+        // ################################### scope control functions // ##########################################
+
         /**
-         *
+         * Broadcast on loading -> first page load.
          */
         $rootScope.$broadcast('toggleLoading', false);
     }]);
