@@ -37,6 +37,12 @@ angular.module('angularDemoApp')
 
 
             /**
+             * True if currently an install is running
+             * @type {boolean}
+             */
+            $scope.installInProgress = false;
+
+            /**
              * Dialog modal view toggle
              * @type {boolean}
              */
@@ -107,6 +113,7 @@ angular.module('angularDemoApp')
                             //close dialog after short delay
                             $timeout(function() {
                                 $scope.openDialog = false;
+                                $scope.installInProgress = false;
                             }, 1500);
                         }
                     }, (i+1) * 15);
@@ -116,42 +123,56 @@ angular.module('angularDemoApp')
                 for (var i = 0; i < count; i++) {
                     myTimeout(i);
                 }
-
             }
+
 
             /**
              * $scope action generate small data stack
              */
             $scope.generateSmallStack = function () {
 
-                //Init progress bar
-                $scope.loadingProgress = 0;
-                $scope.itemCount = 0;
-                $scope.loadingText = 'Please wait .. creating dummy data...';
-                $scope.openDialog = true;
+                if ($scope.installInProgress === false) {
 
-                //close dialog after short delay
-                $timeout(function() {
-                    generateRandomData(25);
-                }, 500);
+                    //setup install progress
+                    $scope.installInProgress = true;
+
+                    //Init progress bar
+                    $scope.loadingProgress = 0;
+                    $scope.itemCount = 0;
+                    $scope.loadingText = 'Please wait .. creating dummy data...';
+                    $scope.openDialog = true;
+
+                    //close dialog after short delay
+                    $timeout(function() {
+                        generateRandomData(25);
+                    }, 500);
+                }
             };
+
 
             /**
              * $scope action generate small data stack
              */
             $scope.generateBigStack = function () {
 
-                //Init progress bar
-                $scope.loadingProgress = 0;
-                $scope.itemCount = 0;
-                $scope.loadingText = 'Please wait .. creating dummy data...';
-                $scope.openDialog = true;
+                if ($scope.installInProgress === false) {
 
-                //close dialog after short delay
-                $timeout(function() {
-                    generateRandomData(1250);
-                }, 500);
-            }
+                    //setup install progress
+                    $scope.installInProgress = true;
+
+                    //Init progress bar
+                    $scope.loadingProgress = 0;
+                    $scope.itemCount = 0;
+                    $scope.loadingText = 'Please wait .. creating dummy data...';
+                    $scope.openDialog = true;
+
+                    //close dialog after short delay
+                    $timeout(function() {
+                        generateRandomData(1250);
+                    }, 500);
+                }
+            };
+
 
             /**
              * $scope action generate small data stack
