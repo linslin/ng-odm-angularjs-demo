@@ -61,9 +61,7 @@
                  * Application startup routine
                  */
                 run: function () {
-
-                    //run odm db init/creates
-                    $odm.db().init();
+                    //application init stuff here
                 }
             };
         }

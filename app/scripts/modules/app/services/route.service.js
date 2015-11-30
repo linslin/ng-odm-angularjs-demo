@@ -79,11 +79,11 @@
          */
         function routeServiceCtrl($scope, $rootScope, $location) {
 
+
             /**
              * Scope service "isPage". Check if given route is current page
              *
              * @param {string} pageRoute
-             *
              * @return boolean
              */
             $scope.isPage = function(pageRoute) {
@@ -96,10 +96,21 @@
                 }
             };
 
-            $scope.setLoading = function (pageRoute) {
+
+            /**
+             * Setup loading animation
+             *
+             * @param e
+             * @param pageRoute
+             * @returns {boolean}
+             */
+            $scope.setLoading = function (e, pageRoute) {
                 if ($location.path() !== pageRoute) {
                     $rootScope.$broadcast('toggleLoading', true);
                 }
+
+                //return true to make browser proceed with page load.
+                $location.path(pageRoute);
             };
         }
 })();
